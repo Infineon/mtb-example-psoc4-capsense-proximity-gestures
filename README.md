@@ -1,20 +1,17 @@
-# PSoC&trade; 4: MSC CAPSENSE&trade; proximity gestures
+# PSoC&trade; 4: CAPSENSE&trade; proximity gestures
 
 This code example demonstrate how to detect swipe gestures in the X-axis and Y-axis using the proximity sensors on [CY8CKIT-024](https://www.infineon.com/CY8CKIT-024) using the PSoC&trade; 4 device.
 
-This code example is designed to operate on [CY8CKIT-041S-MAX](https://www.infineon.com/CY8CKIT-041S-MAX) with [CY8CKIT-024](https://www.infineon.com/CY8CKIT-024).
+[View this README on GitHub.](https://github.com/Infineon/mtb-example-psoc4-capsense-proximity-gestures)
 
-
-[View this README on GitHub.](https://github.com/Infineon/mtb-example-psoc4-msc-capsense-proximity-gestures)
-
-[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMzc4OTIiLCJTcGVjIE51bWJlciI6IjAwMi0zNzg5MiIsIkRvYyBUaXRsZSI6IlBTb0MmdHJhZGU7IDQ6IE1TQyBDQVBTRU5TRSZ0cmFkZTsgcHJveGltaXR5IGdlc3R1cmVzIiwicmlkIjoicmFqYW5uYWdhdXRhIiwiRG9jIHZlcnNpb24iOiIxLjAuMCIsIkRvYyBMYW5ndWFnZSI6IkVuZ2xpc2giLCJEb2MgRGl2aXNpb24iOiJNQ0QiLCJEb2MgQlUiOiJJQ1ciLCJEb2MgRmFtaWx5IjoiUFNPQyJ9)
+[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMzc4OTIiLCJTcGVjIE51bWJlciI6IjAwMi0zNzg5MiIsIkRvYyBUaXRsZSI6IlBTb0MmdHJhZGU7IDQ6IENBUFNFTlNFJnRyYWRlOyBwcm94aW1pdHkgZ2VzdHVyZXMiLCJyaWQiOiJyYWphbm5hZ2F1dGEiLCJEb2MgdmVyc2lvbiI6IjEuMS4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
 
 ## Requirements
 
 - [ModusToolbox&trade; software](https://www.infineon.com/modustoolbox) v3.1 or later (tested with v3.1)
-- Board support package (BSP) minimum required version: 3.0.0
+- Board support package (BSP) minimum required version: 3.1.0
 - Programming language: C
-- Associated parts: [PSoC&trade; 4100S Max](https://www.infineon.com/cms/en/product/microcontroller/32-bit-psoc-arm-cortex-microcontroller/psoc-4-32-bit-arm-cortex-m0-mcu/psoc-4100/psoc-4100s-max/)
+- Associated parts: [PSoC&trade; 4100S Max, and PSoC&trade; 4500S](https://www.infineon.com/cms/en/product/microcontroller/32-bit-psoc-arm-cortex-microcontroller/psoc-4-32-bit-arm-cortex-m0-mcu)
 
 
 ## Supported toolchains (make variable 'TOOLCHAIN')
@@ -25,11 +22,12 @@ This code example is designed to operate on [CY8CKIT-041S-MAX](https://www.infin
 
 ## Supported kits (make variable 'TARGET')
 
-- [PSoC&trade; 4100S Max pioneer kit](https://www.infineon.com/CY8CKIT-041S-MAX) (`CY8CKIT-041S-MAX`) - Default target
+- [PSoC&trade; 4100S Max Pioneer Kit](https://www.infineon.com/CY8CKIT-041S-MAX) (`CY8CKIT-041S-MAX`) - Default target
+- [PSoC&trade; 4500S Pioneer Kit](https://www.infineon.com/CY8CKIT-045S) (`CY8CKIT-045S`)
 
 ## Hardware setup
 
-The [CY8CKIT-024](https://www.infineon.com/CY8CKIT-024) has Arduino™-compatible headers and can be connected to the [CY8CKIT-041S-MAX](https://www.infineon.com/CY8CKIT-041S-MAX) kit. To test the project with [CY8CKIT-041S-MAX](https://www.infineon.com/CY8CKIT-041S-MAX), connect the kit to [CY8CKIT-024](https://www.infineon.com/CY8CKIT-024), as shown in **Figure 1**.
+The [CY8CKIT-024](https://www.infineon.com/CY8CKIT-024) has Arduino-compatible headers and can be connected to the [CY8CKIT-041S-MAX](https://www.infineon.com/CY8CKIT-041S-MAX) kit. To test the project with [CY8CKIT-041S-MAX](https://www.infineon.com/CY8CKIT-041S-MAX), connect the kit to [CY8CKIT-024](https://www.infineon.com/CY8CKIT-024), as shown in **Figure 1**.
 
    **Figure 1. Hardware connection**  
 
@@ -39,9 +37,14 @@ The [CY8CKIT-024](https://www.infineon.com/CY8CKIT-024) has Arduino™-compatibl
 
 2. On [CY8CKIT-024](https://www.infineon.com/CY8CKIT-024), slide SW1 to select SHIELD.
 
-**Note:** Press the reset switch, SW1, on [CY8CKIT-041S-MAX](https://www.infineon.com/CY8CKIT-041S-MAX) whenever you change the slide switch, SW1, position on [CY8CKIT-024](https://www.infineon.com/CY8CKIT-024).
+> **Note:** Press the reset switch, SW1, on [CY8CKIT-041S-MAX](https://www.infineon.com/CY8CKIT-041S-MAX) whenever you change the slide switch, SW1, position on [CY8CKIT-024](https://www.infineon.com/CY8CKIT-024).
 
-**Note:** PSoC&trade; 4 kits ship with KitProg2 installed. The ModusToolbox&trade; software requires KitProg3. Before using this code example, make sure that the board is upgraded to KitProg3. The tool and instructions are available in the [Firmware-loader](https://github.com/Infineon/Firmware-loader) GitHub repository. If you do not upgrade, you will see an error like "unable to find CMSIS-DAP device" or "KitProg firmware is out of date".
+- Follow the same hardware setup steps for [CY8CKIT-045S](https://www.infineon.com/CY8CKIT-045S).
+
+### Board rework on [CY8CKIT-045S](https://www.infineon.com/CY8CKIT-045S)
+For [CY8CKIT-045S](https://www.infineon.com/CY8CKIT-045S), pins P2[4] and P2[5] are configured as CYBSP_DEBUG_UART_RX and CYBSP_DEBUG_UART_TX. To use these pins for [CY8CKIT-024](https://www.infineon.com/CY8CKIT-024), remove resistors R27 and R26.
+
+> **Note:** Some of the PSoC&trade; 4 kits ship with KitProg2 installed. The ModusToolbox&trade; software requires KitProg3. Before using this code example, make sure that the board is upgraded to KitProg3. The tool and instructions are available in the [Firmware-loader](https://github.com/Infineon/Firmware-loader) GitHub repository. If you do not upgrade, you will see an error like "unable to find CMSIS-DAP device" or "KitProg firmware is out of date".
 
 ## Software setup
 
@@ -49,105 +52,106 @@ This example requires no additional software or tools.
 
 ## Using the code example
 
-Create the project and open it using one of the following:
+### Create the project
 
-<details><summary><b>In Eclipse IDE for ModusToolbox&trade; software</b></summary>
+The ModusToolbox&trade; tools package provides the Project Creator as both a GUI tool and a command line tool.
 
-1. Click the **New Application** link in the **Quick Panel** (or, use **File** > **New** > **ModusToolbox&trade; Application**). This launches the [Project Creator](https://www.infineon.com/ModusToolboxProjectCreator) tool.
+<details><summary><b>Use Project Creator GUI</b></summary>
 
-2. Pick a kit supported by the code example from the list shown in the **Project Creator - Choose Board Support Package (BSP)** dialog.
+1. Open the Project Creator GUI tool.
 
-   When you select a supported kit, the example is reconfigured automatically to work with the kit. To work with a different supported kit later, use the [Library Manager](https://www.infineon.com/ModusToolboxLibraryManager) to choose the BSP for the supported kit. You can use the Library Manager to select or update the BSP and firmware libraries used in this application. To access the Library Manager, click the link from the **Quick Panel**.
+   There are several ways to do this, including launching it from the dashboard or from inside the Eclipse IDE. For more details, see the [Project Creator user guide](https://www.infineon.com/ModusToolboxProjectCreator) (locally available at *{ModusToolbox&trade; install directory}/tools_{version}/project-creator/docs/project-creator.pdf*).
 
-   You can also just start the application creation process again and select a different kit.
+2. On the **Choose Board Support Package (BSP)** page, select a kit supported by this code example. See [Supported kits](#supported-kits-make-variable-target).
+   > **Note:** To use this code example for a kit not listed here, you may need to update the source files. If the kit does not have the required resources, the application may not work.
 
-   If you want to use the application for a kit not listed here, you may need to update the source files. If the kit does not have the required resources, the application may not work.
+3. On the **Select Application** page:
 
-3. In the **Project Creator - Select Application** dialog, choose the example by enabling the checkbox.
+   a. Select the **Applications(s) Root Path** and the **Target IDE**.
 
-4. (Optional) Change the suggested **New Application Name**.
+   > **Note:** Depending on how you open the Project Creator tool, these fields may be pre-selected for you.
 
-5. The **Application(s) Root Path** defaults to the Eclipse workspace, which is usually the desired location for the application. If you want to store the application in a different location, you can change the *Application(s) Root Path* value. Applications that share libraries should be in the same root path.
+   b.	Select this code example from the list by enabling its check box.
 
-6. Click **Create** to complete the application creation process.
+   > **Note:** You can narrow the list of displayed examples by typing in the filter box.
 
-For more details, see the [Eclipse IDE for ModusToolbox&trade; software user guide](https://www.infineon.com/MTBEclipseIDEUserGuide) (locally available at *{ModusToolbox&trade; software install directory}/docs_{version}/mt_ide_user_guide.pdf*).
+   c. (Optional) Change the suggested **New Application Name** and **New BSP Name**.
+
+   d. Click **Create** to complete the application creation process.
 
 </details>
 
-<details><summary><b>In command-line interface (CLI)</b></summary>
+<details><summary><b>Use Project Creator CLI</b></summary>
 
-ModusToolbox&trade; software provides the Project Creator as both a GUI tool and the command line tool, "project-creator-cli". Use the CLI tool to create applications from a CLI terminal or from within batch files or shell scripts. This tool is available in the *{ModusToolbox&trade; software install directory}/tools_{version}/project-creator/* directory.
+The 'project-creator-cli' tool can be used to create applications from a CLI terminal or from within batch files or shell scripts. This tool is available in the *{ModusToolbox&trade; install directory}/tools_{version}/project-creator/* directory.
 
-Use a CLI terminal to invoke the "project-creator-cli" tool. On Windows, use the command line "modus-shell" program provided in the ModusToolbox&trade; software installation instead of a standard Windows command-line application. This shell provides access to all ModusToolbox&trade; software tools. You can access it by typing `modus-shell` in the search box in the Windows menu. In Linux and macOS, you can use any terminal application.
+Use a CLI terminal to invoke the 'project-creator-cli' tool. On Windows, use the command-line 'modus-shell' program provided in the ModusToolbox&trade; installation instead of a standard Windows command-line application. This shell provides access to all ModusToolbox&trade; tools. You can access it by typing "modus-shell" in the search box in the Windows menu. In Linux and macOS, you can use any terminal application.
 
-The "project-creator-cli" tool has the following arguments:
+The following example clones the "mtb-example-psoc4-capsense-proximity-gestures" application with the desired name "CapsenseProximityGestures" configured for the CY8CKIT-041S-MAX BSP into the specified working directory, C:/mtb_projects:
+
+   ```
+   project-creator-cli --board-id CY8CKIT-041S-MAX --app-id mtb-example-psoc4-capsense-proximity-gestures --user-app-name CapsenseProximityGestures --target-dir "C:/mtb_projects"
+   ```
+
+The 'project-creator-cli' tool has the following arguments:
 
 Argument | Description | Required/optional
 ---------|-------------|-----------
-`--board-id` | Defined in the `<id>` field of the [BSP](https://github.com/Infineon?q=bsp-manifest&type=&language=&sort=) manifest | Required
-`--app-id`   | Defined in the `<id>` field of the [CE](https://github.com/Infineon?q=ce-manifest&type=&language=&sort=) manifest | Required
+`--board-id` | Defined in the <id> field of the [BSP](https://github.com/Infineon?q=bsp-manifest&type=&language=&sort=) manifest | Required
+`--app-id`   | Defined in the <id> field of the [CE](https://github.com/Infineon?q=ce-manifest&type=&language=&sort=) manifest | Required
 `--target-dir`| Specify the directory in which the application is to be created if you prefer not to use the default current working directory | Optional
 `--user-app-name`| Specify the name of the application if you prefer to have a name other than the example's default name | Optional
 
-<br />
+> **Note:** The project-creator-cli tool uses the `git clone` and `make getlibs` commands to fetch the repository and import the required libraries. For details, see the "Project creator tools" section of the [ModusToolbox&trade; tools package user guide](https://www.infineon.com/ModusToolboxUserGuide) (locally available at {ModusToolbox&trade; install directory}/docs_{version}/mtb_user_guide.pdf).
 
-The following example clones the "[CAPSENSE&trade; Proximity Gestures](https://github.com/Infineon/mtb-example-psoc4-msc-capsense-proximity-gestures)" application with the desired name "CapsenseProximityGestures" configured for the [*CY8CKIT-041S-MAX*](https://www.infineon.com/CY8CKIT-041S-MAX) BSP into the specified working directory, *C:/mtb_projects*:
-
-   ```
-   project-creator-cli --board-id CY8CKIT-041S-MAX --app-id mtb-example-psoc4-msc-capsense-proximity-gestures --user-app-name CapsenseProximityGestures --target-dir "C:/mtb_projects"
-   ```
-
-**Note:** The project-creator-cli tool uses the `git clone` and `make getlibs` commands to fetch the repository and import the required libraries. For details, see the "Project creator tools" section of the [ModusToolbox&trade; software user guide](https://www.infineon.com/ModusToolboxUserGuide) (locally available at *{ModusToolbox&trade; software install directory}/docs_{version}/mtb_user_guide.pdf*).
-
-To work with a different supported kit later, use the [Library Manager](https://www.infineon.com/ModusToolboxLibraryManager) to choose the BSP for the supported kit. You can invoke the Library Manager GUI tool from the terminal using `make library-manager` command or use the Library Manager CLI tool "library-manager-cli" to change the BSP.
-
-The "library-manager-cli" tool has the following arguments:
-
-Argument | Description | Required/optional
----------|-------------|-----------
-`--add-bsp-name` | Name of the BSP that should be added to the application | Required
-`--set-active-bsp` | Name of the BSP that should be as active BSP for the application | Required
-`--add-bsp-version`| Specify the version of the BSP that should be added to the application if you do not wish to use the latest from manifest | Optional
-`--add-bsp-location`| Specify the location of the BSP (local/shared) if you prefer to add the BSP in a shared path | Optional
-
-<br />
-
-The following example adds the [CY8CKIT-041S-MAX](https://www.infineon.com/CY8CKIT-041S-MAX) BSP to the already created application and makes it the active BSP for the app:
-
-   ```
-   library-manager-cli --project "C:/mtb_projects/CapsenseProximityGestures" --add-bsp-name CY8CKIT-041S-MAX --add-bsp-version "latest-v3.X" --add-bsp-location "local"
-
-   library-manager-cli --project "C:/mtb_projects/CapsenseProximityGestures" --set-active-bsp APP_CY8CKIT-041S-MAX
-   ```
 
 </details>
 
-<details><summary><b>In third-party IDEs</b></summary>
+### Open the project
 
-Use one of the following options:
+After the project has been created, you can open it in your preferred development environment.
 
-- **Use the standalone [Project Creator](https://www.infineon.com/ModusToolboxProjectCreator) tool:**
+<details><summary><b>Eclipse IDE</b></summary>
 
-   1. Launch Project Creator from the Windows Start menu or from *{ModusToolbox&trade; software install directory}/tools_{version}/project-creator/project-creator.exe*.
 
-   2. In the initial **Choose Board Support Package** screen, select the BSP, and click **Next**.
+If you opened the Project Creator tool from the included Eclipse IDE, the project will open in Eclipse automatically.
 
-   3. In the **Select Application** screen, select the appropriate IDE from the **Target IDE** drop-down menu.
+For more details, see the [Eclipse IDE for ModusToolbox&trade; user guide](https://www.infineon.com/MTBEclipseIDEUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mt_ide_user_guide.pdf*).
 
-   4. Click **Create** and follow the instructions printed in the bottom pane to import or open the exported project in the respective IDE.
+</details>
 
-<br />
 
-- **Use command-line interface (CLI):**
+<details><summary><b>Visual Studio (VS) Code</b></summary>
 
-   1. Follow the instructions from the **In command-line interface (CLI)** section to create the application.
+Launch VS Code manually, and then open the generated *{project-name}.code-workspace* file located in the project directory.
 
-   2. Export the application to a supported IDE using the `make <ide>` command.
+For more details, see the [Visual Studio Code for ModusToolbox&trade; user guide](https://www.infineon.com/MTBVSCodeUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mt_vscode_user_guide.pdf*).
 
-   3. Follow the instructions displayed in the terminal to create or import the application as an IDE project.
+</details>
 
-For a list of supported IDEs and more details, see the "Exporting to IDEs" section of the [ModusToolbox&trade; software user guide](https://www.infineon.com/ModusToolboxUserGuide) (locally available at *{ModusToolbox&trade; software install directory}/docs_{version}/mtb_user_guide.pdf*).
+
+<details><summary><b>Keil µVision</b></summary>
+
+Double-click the generated *{project-name}.cprj* file to launch the Keil µVision IDE.
+
+For more details, see the [Keil µVision for ModusToolbox&trade; user guide](https://www.infineon.com/MTBuVisionUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mt_uvision_user_guide.pdf*).
+
+</details>
+
+<details><summary><b>IAR Embedded Workbench</b></summary>
+
+Open IAR Embedded Workbench manually, and create a new project. Then select the generated *{project-name}.ipcf* file located in the project directory.
+
+For more details, see the [IAR Embedded Workbench for ModusToolbox&trade; user guide](https://www.infineon.com/MTBIARUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mt_iar_user_guide.pdf*).
+
+</details>
+
+<details><summary><b>Command line</b></summary>
+
+
+If you prefer to use the CLI, open the appropriate terminal, and navigate to the project directory. On Windows, use the command-line 'modus-shell' program; on Linux and macOS, you can use any terminal application. From there, you can run various `make` commands.
+
+For more details, see the [ModusToolbox&trade; tools package user guide](https://www.infineon.com/ModusToolboxUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mtb_user_guide.pdf*).
 
 </details>
 
@@ -158,13 +162,19 @@ For a list of supported IDEs and more details, see the "Exporting to IDEs" secti
 2. Connect the board to your PC using the provided USB cable through the KitProg3 USB connector.
 3. Program the board using one of the following:
 
-   <details><summary><b>Using Eclipse IDE for ModusToolbox&trade; software</b></summary>
+   <details><summary><b>Using Eclipse IDE</b></summary>
 
       1. Select the application project in the Project Explorer.
 
       2. In the **Quick Panel**, scroll down, and click **\<Application Name> Program (KitProg3_MiniProg4)**.
 
    </details>
+
+   <details><summary><b>In other IDEs</b></summary>
+
+   Follow the instructions in your preferred IDE.
+   </details>
+
 
    <details><summary><b>Using CLI</b></summary>
 
@@ -201,7 +211,7 @@ For a list of supported IDEs and more details, see the "Exporting to IDEs" secti
    
    ![](images/led-on-sequence-after-gesture.png)
 
-**Note:** When the macro **LED_DRIVE_SEQUENCE** is set to **LED_DRIVE_AFTER_GESTURE,** the LEDs turn ON only when the gesture is completed, that is, when the hand has completely moved away from the kit.
+> **Note:** When the macro **LED_DRIVE_SEQUENCE** is set to **LED_DRIVE_AFTER_GESTURE,** the LEDs turn ON only when the gesture is completed, that is, when the hand has completely moved away from the kit.
 
 ### Monitor data using CAPSENSE&trade; Tuner
 
@@ -262,14 +272,14 @@ tune CAPSENSE&trade; applications.
    
     ![](images/acquire-noise.png)
     
-10. Once the noise is acquired, place the hand over the [CY8CKIT-024](https://www.infineon.com/CY8CKIT-024) Kit at a distance of 2 cm and then click **Acquire Signal**. Ensure that the hand remains on the same position as long as the signal acquisition is in progress. 
+10. Once the noise is acquired, place the hand over the [CY8CKIT-024](https://www.infineon.com/CY8CKIT-024) Proximity Shield at a distance of 2 cm and then click **Acquire Signal**. Ensure that the hand remains on the same position as long as the signal acquisition is in progress. 
 The calculated SNR on this button is displayed, as shown in **Figure 12**.
 
     **Figure 12. CAPSENSE&trade; Tuner - SNR measurement**  
    
     ![](images/acquire-signal.png)
 
-11. If the SNR is above 5:1, switch to the **Graph View** and place the hand over the [CY8CKIT-024](https://www.infineon.com/CY8CKIT-024) Kit at a distance of 2 cm, and check the **Sensor Signal** value is above 50 as shown in **Figure 13**.
+11. If the SNR is above 5:1, switch to the **Graph View** and place the hand over the [CY8CKIT-024](https://www.infineon.com/CY8CKIT-024) Proximity Shield at a distance of 2 cm, and check the **Sensor Signal** value is above 50 as shown in **Figure 13**.
 
     **Figure 13. CAPSENSE&trade; Tuner - Sensor signal**  
    
@@ -279,7 +289,7 @@ The calculated SNR on this button is displayed, as shown in **Figure 12**.
 ## Tuning procedure
 The following steps explain the tuning procedure for the proximity widgets.
 
-**Note:** See the section "Manual Tuning" in the [AN92239 - Proximity sensing with CAPSENSE&trade;](http://www.cypress.com/documentation/application-notes/an92239-proximity-sensing-capsense) to learn about the considerations for selecting each parameter values.
+> **Note:** See the section "Manual Tuning" in the [AN92239 - Proximity sensing with CAPSENSE&trade;](http://www.cypress.com/documentation/application-notes/an92239-proximity-sensing-capsense) to learn about the considerations for selecting each parameter values.
 
 The tuning flow of the proximity widget is shown in **Figure 14**.
 
@@ -329,7 +339,10 @@ Do the following to tune the proximity widget:
    ![](images/basic-csd-settings.png)
  
 6. Do the following in the **General** tab under the **Advanced** tab:
-   1. Set the **Modulator clock divider** to **2** to obtain the optimum modulator clock frequency. 
+   1. Set the **Modulator clock divider** to **2** to obtain the optimum modulator clock frequency.
+ 
+      > **Note:** For [CY8CKIT-045S](https://www.infineon.com/CY8CKIT-045S), set the **Modulator clock divider** to **2** in the **CSD settings** tab under the **Advanced** tab.
+
    2. Set the **Number of init sub-conversions** based on the hint shown when you hover over the edit box.
    3. Enable CIC2 hardware filter.
    4. Enable Proximity IIR filter with IIR filter raw coefficient 64.
@@ -338,7 +351,8 @@ Do the following to tune the proximity widget:
 
   ![](images/advanced-general-settings.png)
 
-   **Note:** Each tab has a **Restore Defaults** button to restore the parameters of that tab to their default values.
+   > **Note:** Each tab has a **Restore Defaults** button to restore the parameters of that tab to their default values.
+
 7. Go to the **CSD settings** tab and make the following changes:
 
    1. Set **Inactive sensor connection** as **Shield**.
@@ -352,6 +366,8 @@ Do the following to tune the proximity widget:
    3. Set **Total shield count** as **2** (Enabling all the inactive sensors as shield during CSD sensor scan).
 
    4. Select **Enable CDAC auto-calibration** and **Enable compensation CDAC**.
+
+      > **Note:** For [CY8CKIT-045S](https://www.infineon.com/CY8CKIT-045S), select **Enable IDAC auto-calibration** and **Enable compensation IDAC**.
 
    5. Set **Raw count calibration level (%)** to **70**.
 
@@ -367,11 +383,13 @@ Do the following to tune the proximity widget:
 
    - **Clock source:** Direct
 
-      **Note:** Spread spectrum clock (SSC) or PRS clock can be used as a clock source to deal with EMI/EMC issues.
+      > **Note:** Spread spectrum clock (SSC) or PRS clock can be used as a clock source to deal with EMI/EMC issues.
 
    - **Number of sub-conversions: 60**
 
      60 is a good starting point to ensure a fast scan time and sufficient signal. This value will be adjusted as required in [Stage 3: Fine-tune for required SNR and sensor signal](#stage-3-fine-tune-for-required-snr-and-sensor-signal).
+
+      > **Note:** For [CY8CKIT-045S](https://www.infineon.com/CY8CKIT-045S), set the **Scan resolution** to default value.
      
     - Retain the default values for widget threshold paremeters.
     
@@ -393,9 +411,9 @@ Refer to the [CAPSENSE&trade; design guide](https://www.infineon.com/AN85951) fo
 -------------------------
 The sense clock is derived from the Modulator clock using a clock-divider and is used to scan the sensor by driving the CAPSENSE&trade; switched capacitor circuits. Both the clock source and clock divider are configurable.
 
-Select the maximum sense clock frequency such that the sensor and shield capacitance are charged and discharged completely in each cycle. This can be verified using an oscilloscope and an active probe. To view the charging and discharging waveforms of the shield, probe at the shield pin(Pin 8.1 for [CY8CKIT-041S-MAX](https://www.infineon.com/CY8CKIT-041S-MAX)). Also observe the waveforms for other shield pins.
+Select the maximum sense clock frequency such that the sensor and shield capacitance are charged and discharged completely in each cycle. This can be verified using an oscilloscope and an active probe. To view the charging and discharging waveforms of the shield, probe at the shield pin (pin 8.1 for [CY8CKIT-041S-MAX](https://www.infineon.com/CY8CKIT-041S-MAX), and pin 2.5 for [CY8CKIT-045S](https://www.infineon.com/CY8CKIT-045S)). Also observe the waveforms for other shield pins.
 
-**Figure 21**  shows proper charging when  the sense clock frequency is correctly tuned, i.e., the voltage is settling to the required voltage at the end of each phase. **Figure 22** shows incomplete settling (charging/discharging) and hence the sense clock divider is set to 20 as shown in **Figure 24**.
+**Figure 21** shows proper charging when  the sense clock frequency is correctly tuned, i.e., the voltage is settling to the required voltage at the end of each phase. **Figure 22** shows incomplete settling (charging/discharging) and hence the sense clock divider is set to 20 as shown in **Figure 25**.
 
 
    **Figure 21. Proper charge cycle of a sensor**
@@ -406,6 +424,12 @@ Select the maximum sense clock frequency such that the sensor and shield capacit
 
    ![](images/csdrm-waveform_improper.png)
 
+For [CY8CKIT-045S](https://www.infineon.com/CY8CKIT-045S), **Figure 23**  shows proper charging when the sense clock frequency is correctly tuned.
+
+   **Figure 23. Proper charge cycle of a sensor**
+
+   ![](images/csd-waveform.png)
+
    To set the proper sense clock frequency, follow the steps listed below:
 
    1. Program the board and launch CAPSENSE&trade; Tuner.
@@ -414,7 +438,6 @@ Select the maximum sense clock frequency such that the sensor and shield capacit
 
    3. If the charging is incomplete, increase the Sense clock divider for all the the proximity widgets. Do this in CAPSENSE&trade; Tuner by selecting the sensor and editing the Sense clock divider parameter in the Widget/Sensor Parameters panel.
 
-      **Note:** 
       - The sense clock divider should be **divisible by 4**. This ensures that all four scan phases have equal durations. 
 
       - After editing the value, click the **Apply to Device** button and observe the waveform again. Repeat this until complete settling is observed.  
@@ -424,7 +447,7 @@ Select the maximum sense clock frequency such that the sensor and shield capacit
       
    4. Click the **Apply to Project** button so that the configuration is saved to your project. 
 
-      **Figure 23. Sense Clock Divider setting**
+      **Figure 24. Sense Clock Divider setting**
 
       ![](images/sense-clock-divider-setting.png)
 
@@ -432,10 +455,10 @@ Select the maximum sense clock frequency such that the sensor and shield capacit
 
       **Table 1. Sense clock parameters obtained for CY8CKIT-024**
 
-      Parameter | Value |
-      :-------- |:-----------|
-      Modulator clock divider | 2 |
-      Sense clock divider | 20 |
+      Parameter | CY8CKIT-041S-MAX | CY8CKIT-045S
+      :-------- |:-----------|:-------------
+      Modulator clock divider | 2 | 2 
+      Sense clock divider | 20 | 28 
       
 ### Stage 3: Fine-tune for required SNR and sensor signal
 -------------------------
@@ -449,7 +472,9 @@ The steps for optimizing these parameters are as follows:
 
 2. If the SNR is less than 5:1 increase the number of sub-conversions. Edit the number of sub-conversions (N<sub>sub</sub>) directly in the **Widget/Sensor parameters** tab of the CAPSENSE&trade; Tuner.
 
-      **Note:** Number of sub-conversion should be greater than or equal to 8.
+      > **Note:** Number of sub-conversion should be greater than or equal to 8.
+
+> **Note:** For [CY8CKIT-045S](https://www.infineon.com/CY8CKIT-045S) increase the **Scan Resolution** if the SNR is less than 5:1.
 
 3.  Load the parameters to the device and measure SNR as mentioned in the [Monitor data using CAPSENSE&trade; Tuner](#monitor-data-using-capsense&trade;-tuner) section. 
    
@@ -463,7 +488,7 @@ The steps for optimizing these parameters are as follows:
 
    Whenever the CIC2 filter is enabled, it is recommended to enable the IIR filter for optimal noise reduction. Therefore, this example has the IIR filter enabled as well.
 
-   **Note** : Increasing number of sub-conversions and enabling filters increases the scan time which in turn decreases the responsiveness of the sensor. Increase in scan time also increases the power consumption. Therefore, the number of sub-conversions and filter configuration must be optimized to achieve a balance between SNR, power, and refresh rate. 
+   > **Note** : Increasing number of sub-conversions and enabling filters increases the scan time which in turn decreases the responsiveness of the sensor. Increase in scan time also increases the power consumption. Therefore, the number of sub-conversions and filter configuration must be optimized to achieve a balance between SNR, power, and refresh rate. 
 
 ### Stage 4: Tune threshold parameters
 -------------------------
@@ -471,9 +496,9 @@ Various thresholds, relative to the signal, need to be set for each sensor. Do t
 
 1. Switch to the **Graph View** tab and select **PS1**.
 
-2. Place your hand at 2 cm directly above the proximity sensor and monitor the touch signal in the **Sensor signal** graph, as shown in **Figure 24**. 
+2. Place your hand at 2 cm directly above the proximity sensor and monitor the touch signal in the **Sensor signal** graph, as shown in **Figure 25**. 
 
-   **Figure 24. Sensor signal when hand is in the proximity of the sensor**
+   **Figure 25. Sensor signal when hand is in the proximity of the sensor**
    
    ![](images/tuner-threshold-settings.png)
 
@@ -499,13 +524,13 @@ Various thresholds, relative to the signal, need to be set for each sensor. Do t
 
 4. Apply the settings to the device by clicking **To device**.
 
-   **Figure 25. Apply settings to device**
+   **Figure 26. Apply settings to device**
    
    ![](images/tuner-apply-settings-device.png)
 
-   If your sensor is tuned correctly, you will observe that the proximity status goes from 0 to 3 in the **Status** sub-window of the **Graph View** window as **Figure 26** shows. The successful tuning of the proximity sensor is also indicated by LEDs (LED1-LED5) in the kit; it turns ON when the hand comes closer than the maximum distance and turns OFF when the hand is moved away from the proximity sensor.
+   If your sensor is tuned correctly, you will observe that the proximity status goes from 0 to 3 in the **Status** sub-window of the **Graph View** window as **Figure 27** shows. The successful tuning of the proximity sensor is also indicated by LEDs (LED1-LED5) in the kit; it turns ON when the hand comes closer than the maximum distance and turns OFF when the hand is moved away from the proximity sensor.
 
-   **Figure 26. Sensor status in CAPSENSE&trade; Tuner showing proximity status**
+   **Figure 27. Sensor status in CAPSENSE&trade; Tuner showing proximity status**
    
    ![](images/tuner-status.png)
    
@@ -521,11 +546,22 @@ Various thresholds, relative to the signal, need to be set for each sensor. Do t
    Hysteresis |10 |
    ON debounce | 3|
 
-**Note:** Follow the same process for PS2, PS3 and PS4 proximity widgets.
+> **Note:** Follow the same process for PS2, PS3 and PS4 proximity widgets.
 
 ## Debugging
+You can debug the example to step through the code.
 
-You can debug the example to step through the code. In the IDE, use the **\<Application Name> Debug (KitProg3_MiniProg4)** configuration in the **Quick Panel**. For details, see the "Program and debug" section in the [Eclipse IDE for ModusToolbox&trade; software user guide](https://www.infineon.com/MTBEclipseIDEUserGuide).
+<details><summary><b>In Eclipse IDE</b></summary>
+
+Use the **\<Application Name> Debug (KitProg3_MiniProg4)** configuration in the **Quick Panel**. For details, see the "Program and debug" section in the [Eclipse IDE for ModusToolbox&trade; user guide](https://www.infineon.com/MTBEclipseIDEUserGuide).
+
+</details>
+
+<details><summary><b>In other IDEs</b></summary>
+
+Follow the instructions in your preferred IDE.
+
+</details>
 
 ## Design and implementation
 
@@ -543,7 +579,7 @@ When the macro is set to **“LED_DRIVE_DURING_GESTURE,”** in user_gestures.h 
 
 ### Resources and settings
 
-**Figure 27. Device configurator - EZI2C Pepipheral** 
+**Figure 28. Device configurator - EZI2C Pepipheral** 
  
 ![](images/ezi2c-configuration.png)
  
@@ -552,11 +588,11 @@ When the macro is set to **“LED_DRIVE_DURING_GESTURE,”** in user_gestures.h 
 | Resource  |  Alias/object     |    Purpose     |
 | :------- | :------------    | :------------ |
 | SCB (I2C) (PDL) | CYBSP_EZI2C | EZI2C slave driver to communicate with the CAPSENSE&trade; tuner |
-| CAPSENSE&trade; | CYBSP_CapSense | CAPSENSE&trade; driver to interact with the CSD hardware and interface CAPSENSE&trade; sensors |
+| CAPSENSE&trade; | CYBSP_CapSense | CAPSENSE&trade; driver to interact with the hardware and interface CAPSENSE&trade; sensors |
 
 ### Firmware flow
 
-**Figure 28. Firmware flowchart**
+**Figure 29. Firmware flowchart**
 
 ![](images/firmware-flow-chart.png)
 
@@ -583,11 +619,12 @@ Infineon provides a wealth of data at www.infineon.com to help you select the ri
 
 ## Document history
 
-Document title: *CE237892* - *PSoC&trade; 4: MSC CAPSENSE™ proximity gestures*
+Document title: *CE237892* - *PSoC&trade; 4: CAPSENSE™ proximity gestures*
 
  Version | Description of change
  ------- | ---------------------
  1.0.0   | New code example
+ 1.1.0   | Added support for CY8CKIT-045S
 
 
 <br />

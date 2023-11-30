@@ -54,11 +54,14 @@
 /*******************************************************************************
  * Macros
  *******************************************************************************/
+#ifdef COMPONENT_PSOC4100SMAX
 #define CAPSENSE_MSC0_INTR_PRIORITY      (3u)
 #define CAPSENSE_MSC1_INTR_PRIORITY      (3u)
-#define CY_ASSERT_FAILED                 (0u)
-#define MSC_CAPSENSE_WIDGET_INACTIVE     (0u)
+#else /* COMPONENT_PSOC4100SP256KB */
+#define CAPSENSE_INTR_PRIORITY    (3u)
+#endif
 
+#define CY_ASSERT_FAILED                 (0u)
 /* EZI2C interrupt priority must be higher than CAPSENSE interrupt */
 #define EZI2C_INTR_PRIORITY              (2u)
 
@@ -85,10 +88,14 @@ cy_stc_scb_ezi2c_context_t ezi2c_context;
  * Function Prototypes
  *******************************************************************************/
 static void initialize_capsense(void);
-static void capsense_msc0_isr(void);
-static void capsense_msc1_isr(void);
 static void ezi2c_isr(void);
 static void initialize_capsense_tuner(void);
+#ifdef COMPONENT_PSOC4100SMAX
+static void capsense_msc0_isr(void);
+static void capsense_msc1_isr(void);
+#else /* COMPONENT_PSOC4100SP256KB */
+static void capsense_isr(void);
+#endif
 
 
 /*******************************************************************************
@@ -136,8 +143,13 @@ int main(void)
     end_sensor_number = TOP_SENSOR;
 #endif
 
+#ifdef COMPONENT_PSOC4100SMAX
     /* Start the first scan */
     Cy_CapSense_ScanAllSlots(&cy_capsense_context);
+#else /* COMPONENT_PSOC4100SP256KB */
+    /* Start the first scan */
+    Cy_CapSense_ScanAllWidgets(&cy_capsense_context);
+#endif
 
     for (;;)
     {
@@ -167,8 +179,14 @@ int main(void)
         /* Establishes synchronized communication with the CAPSENSE Tuner tool */
         Cy_CapSense_RunTuner(&cy_capsense_context);
 
-        /* Start the next scan */
-        Cy_CapSense_ScanAllSlots(&cy_capsense_context);
+#ifdef COMPONENT_PSOC4100SMAX
+    /* Start the next scan */
+    Cy_CapSense_ScanAllSlots(&cy_capsense_context);
+#else /* COMPONENT_PSOC4100SP256KB */
+    /* Start the next scan */
+    Cy_CapSense_ScanAllWidgets(&cy_capsense_context);
+#endif
+
 
     }
 }
@@ -186,6 +204,7 @@ static void initialize_capsense(void)
 {
     cy_capsense_status_t status = CY_CAPSENSE_STATUS_SUCCESS;
 
+#ifdef COMPONENT_PSOC4100SMAX
     /* CAPSENSE interrupt configuration MSC 0 */
     const cy_stc_sysint_t capsense_msc0_interrupt_config =
     {
@@ -199,12 +218,22 @@ static void initialize_capsense(void)
         .intrSrc = CY_MSC1_IRQ,
         .intrPriority = CAPSENSE_MSC1_INTR_PRIORITY,
     };
+#else /* COMPONENT_PSOC4100SP256KB */
+    /* CAPSENSE interrupt configuration */
+    const cy_stc_sysint_t capsense_interrupt_config =
+    {
+        .intrSrc = CYBSP_CSD_IRQ,
+        .intrPriority = CAPSENSE_INTR_PRIORITY,
+    };
+#endif
 
     /* Capture the MSC HW block and initialize it to the default state. */
     status = Cy_CapSense_Init(&cy_capsense_context);
 
     if (CY_CAPSENSE_STATUS_SUCCESS == status)
     {
+
+#ifdef COMPONENT_PSOC4100SMAX
         /* Initialize CAPSENSE interrupt for MSC 0 */
         Cy_SysInt_Init(&capsense_msc0_interrupt_config, capsense_msc0_isr);
         NVIC_ClearPendingIRQ(capsense_msc0_interrupt_config.intrSrc);
@@ -215,6 +244,13 @@ static void initialize_capsense(void)
         NVIC_ClearPendingIRQ(capsense_msc1_interrupt_config.intrSrc);
         NVIC_EnableIRQ(capsense_msc1_interrupt_config.intrSrc);
 
+#else /* COMPONENT_PSOC4100SP256KB */
+        /* Initialize CAPSENSE interrupt */
+        Cy_SysInt_Init(&capsense_interrupt_config, capsense_isr);
+        NVIC_ClearPendingIRQ(capsense_interrupt_config.intrSrc);
+        NVIC_EnableIRQ(capsense_interrupt_config.intrSrc);
+#endif
+
         /* Initialize the CAPSENSE firmware modules. */
         status = Cy_CapSense_Enable(&cy_capsense_context);
     }
@@ -223,11 +259,12 @@ static void initialize_capsense(void)
     {
         /* This status could fail before tuning the sensors correctly.
          * Ensure that this function passes after the CAPSENSE sensors are tuned
-         * as per procedure give in the Readme.md file */
+         * as per procedure given in the README.md file */
     }
 }
 
 
+#ifdef COMPONENT_PSOC4100SMAX
 /*******************************************************************************
  * Function Name: capsense_msc0_isr
  ********************************************************************************
@@ -252,6 +289,25 @@ static void capsense_msc1_isr(void)
 {
     Cy_CapSense_InterruptHandler(CY_MSC1_HW, &cy_capsense_context);
 }
+
+#else /* COMPONENT_PSOC4100SP256KB */
+/*******************************************************************************
+ * Function Name: capsense_isr
+ ********************************************************************************
+ * Summary:
+ *  Function for handling interrupts from CAPSENSE block.
+ *
+ * Return:
+ *  void
+ *
+ * Parameters:
+ *  void
+ *******************************************************************************/
+static void capsense_isr(void)
+{
+    Cy_CapSense_InterruptHandler(CYBSP_CSD_HW, &cy_capsense_context);
+}
+#endif
 
 
 /*******************************************************************************
